@@ -35,10 +35,10 @@ class ViewTestCase(TestCase):
         self.client = APIClient()
         self.agenda_data = {'titulo': 'Reuniao ABC'}
         self.response = self.client.post(
-            reverse('create'),
+            reverse('create_agenda'),
             self.agenda_data,
             format="json")
 
-    def test_api_can_create_a_bucketlist(self):
+    def test_api_can_create_a_agenda(self):
         """Testando a criacao da agenda via post"""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)

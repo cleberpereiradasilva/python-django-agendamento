@@ -35,17 +35,19 @@ python manage.py runserver
 
 
 ```bash
-coverage erase; coverage run --source=salas manage.py test; coverage report
+coverage erase; coverage run --source=salas,agenda manage.py test; coverage report
+
 
 ```
-
-
-| Name                  | Stmts | Miss  | Cover |
+|Name                    | Stmts |Miss| Cover|
 |-|-|-|-|
-|salas/models.py        | 7     |0      |   100%|
-|salas/serializers.py   | 7     |0      |   100%|
-|salas/views.py         | 8     |0      |   100%|
-| Total                 | 22    |0      |   100%|
+|agenda/models.py            |7      |0   |100%
+|agenda/serializers.py       |7      |0   |100%
+|agenda/views.py             |8      |0   |100%
+|salas/models.py             |7      |0   |100%
+|salas/serializers.py        |7      |0   |100%
+|salas/views.py              |8      |0   |100%
+|Total                      |44      |0   |100%
  
 
 ## License - MIT

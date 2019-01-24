@@ -38,10 +38,10 @@ class ViewTestCase(TestCase):
         self.client = APIClient()
         self.sala_data = {'name': 'Av Paulista'}
         self.response = self.client.post(
-            reverse('create'),
+            reverse('create_sala'),
             self.sala_data,
             format="json")
 
-    def test_api_can_create_a_bucketlist(self):
-        """Testando a criacao da sala via post"""
+    def test_api_can_create_a_sala(self):
+        """Testando a criacao da sala via post"""        
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
