@@ -6,4 +6,4 @@ class Sala(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):        
-        return "{}".format(self.name)
+        return "{0}".format(self.name)

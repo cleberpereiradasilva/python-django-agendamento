@@ -22,6 +22,12 @@ class ModelSalaTestCase(TestCase):
         count_atual = Sala.objects.count()
         self.assertNotEqual(count_anterior, count_atual)
 
+    def test_model_sala_to_str(self):
+        """Testando se foi inserido no banco"""
+        count_anterior = Sala.objects.count()
+        self.sala.save()        
+        self.assertEqual(str(self.sala), self.name)
+
 
 
 # TESTAR END POINTS

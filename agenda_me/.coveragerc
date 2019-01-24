@@ -1,0 +1,2 @@
+[run]
+omit = *migrations*, *admin*, *__init__*, *apps*, *urls*, *tests*

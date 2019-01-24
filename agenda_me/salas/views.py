@@ -2,7 +2,6 @@ from rest_framework import generics
 from .serializers import SalaSerializer
 from .models import Sala
 
-
 class CreateView(generics.ListCreateAPIView):   
     queryset = Sala.objects.all()
     serializer_class = SalaSerializer
