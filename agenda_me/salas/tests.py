@@ -8,8 +8,8 @@ class ModelSalaTestCase(TestCase):
     def setUp(self):
         """Variaveis iniciais para o teste."""
         """Por padrão vou usar nomes de ruas."""
-        self.nome = "Rua Augusta"
-        self.sala = Sala(nome=self.nome)
+        self.name = "Rua Augusta"
+        self.sala = Sala(name=self.name)
 
     def test_model_can_create_a_sala(self):
         """Testando se foi inserido no banco"""
