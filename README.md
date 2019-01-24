@@ -1,6 +1,6 @@
 # Django - Agendamentos
 
-Este é uma api para agendamentos de salas de reunião.
+Esta é uma api para agendamentos de salas de reunião.
 
 ## Cenário
 
