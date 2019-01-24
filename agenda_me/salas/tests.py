@@ -1,7 +1,11 @@
 from django.test import TestCase
+from rest_framework.test import APIClient
+from rest_framework import status
+from django.urls import reverse
+
 from .models import Sala
 
-
+# TESTAR CRIACAO DA SALA
 class ModelSalaTestCase(TestCase):
     """Testando o model Sala."""
 
@@ -17,3 +21,21 @@ class ModelSalaTestCase(TestCase):
         self.sala.save()
         count_atual = Sala.objects.count()
         self.assertNotEqual(count_anterior, count_atual)
+
+
+
+# TESTAR END POINTS
+class ViewTestCase(TestCase):
+    
+    def setUp(self):
+        """Variaveis iniciais para o teste."""
+        self.client = APIClient()
+        self.sala_data = {'name': 'Av Paulista'}
+        self.response = self.client.post(
+            reverse('create'),
+            self.sala_data,
+            format="json")
+
+    def test_api_can_create_a_bucketlist(self):
+        """Testando a criacao da sala via post"""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
