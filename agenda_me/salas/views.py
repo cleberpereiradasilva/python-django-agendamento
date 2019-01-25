@@ -15,3 +15,6 @@ class DetailsView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Sala.objects.all()
     serializer_class = SalaSerializer
+
+
+   
