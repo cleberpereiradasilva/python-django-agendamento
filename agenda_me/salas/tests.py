@@ -32,28 +32,20 @@ class ModelSalaTestCase(TestCase):
 
 # TESTAR END POINTS
 class ViewTestCase(TestCase):
-    
     def setUp(self):
         """Variaveis iniciais para o teste."""
-        self.client = APIClient()
-        self.sala_data = {'name': 'Av Paulista'}
-        self.response = self.client.post(
-            reverse('create_sala'),
-            self.sala_data,
-            format="json")
-        self.sala = json.loads(str(self.response.content.decode("utf-8")))
-        
-        
+        """Por padrão vou usar nomes de ruas."""
+        self.name = "Rua Augusta"
+        self.sala = Sala(name=self.name)
+        self.sala.save()           
+    
+    def test_api_can_get_a_sala(self):
+        """Test the api can get a given sala."""
+        sala = Sala.objects.get()       
+        response = self.client.get(
+            reverse('details_sala',
+            kwargs={'pk': sala.id}), format="json")        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, sala)
 
-    def test_api_can_create_a_sala(self):
-        """Testando a criacao da sala via post"""        
-        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
 
-    def test_api_can_update_sala(self):
-        """Test the api can update a given sala."""
-        change_sala = {'name': 'Radial Leste'}
-        res = self.client.put(
-            reverse('details', kwargs={'pk': self.sala.get('id')}),
-            change_sala, format='json'
-        )
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
