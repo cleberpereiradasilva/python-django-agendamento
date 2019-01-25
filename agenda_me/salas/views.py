@@ -9,3 +9,9 @@ class CreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         """Salva os dados do post e cria uma nova Sala."""
         serializer.save()
+
+class DetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+
+    queryset = Sala.objects.all()
+    serializer_class = SalaSerializer

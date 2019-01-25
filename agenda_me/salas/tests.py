@@ -2,7 +2,7 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
-
+import json
 from .models import Sala
 
 # TESTAR CRIACAO DA SALA
@@ -41,7 +41,19 @@ class ViewTestCase(TestCase):
             reverse('create_sala'),
             self.sala_data,
             format="json")
+        self.sala = json.loads(str(self.response.content.decode("utf-8")))
+        
+        
 
     def test_api_can_create_a_sala(self):
         """Testando a criacao da sala via post"""        
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_update_sala(self):
+        """Test the api can update a given sala."""
+        change_sala = {'name': 'Radial Leste'}
+        res = self.client.put(
+            reverse('details', kwargs={'pk': self.sala.get('id')}),
+            change_sala, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
