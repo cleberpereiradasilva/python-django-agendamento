@@ -42,3 +42,31 @@ class ViewTestCase(TestCase):
     def test_api_can_create_a_agenda(self):
         """Testando a criacao da agenda via post"""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+
+    def test_api_can_get_a_genda(self):
+        """Test the api can get a given agenda."""
+        agenda = Agenda.objects.get()       
+        response = self.client.get(
+            reverse('details_genda',
+            kwargs={'pk': agenda.id}), format="json")        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, agenda) 
+  
+    def test_api_can_update_genda(self):
+        """Test the api can update a given agenda."""
+        agenda = Agenda.objects.get()                 
+        change_genda = {'name': 'Radial Leste'}
+        res = self.client.put(
+            reverse('details_genda', kwargs={'pk': agenda.id}),
+            change_genda, format='json')               
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+    
+    def test_api_can_delete_genda(self):
+        """Test the api can delete a agenda."""
+        agenda = Agenda.objects.get()
+        res = self.client.delete(
+            reverse('details_genda', kwargs={'pk': agenda.id}),
+            format='json',
+            follow=True)        
+        self.assertEquals(res.status_code, status.HTTP_204_NO_CONTENT)
