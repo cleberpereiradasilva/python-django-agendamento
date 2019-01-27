@@ -56,10 +56,11 @@ class ViewTestCase(TestCase):
     def test_api_can_update_genda(self):
         """Test the api can update a given agenda."""
         agenda = Agenda.objects.get()                 
-        change_genda = {'name': 'Radial Leste'}
+        change_genda = {'titulo': 'Radial Leste'}
         res = self.client.put(
             reverse('details_genda', kwargs={'pk': agenda.id}),
-            change_genda, format='json')               
+            change_genda, format='json')                       
+        #print(res.content)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
     
     def test_api_can_delete_genda(self):

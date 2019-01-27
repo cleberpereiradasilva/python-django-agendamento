@@ -2,7 +2,8 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
-import json
+
+import json, time
 from .models import Sala
 
 # TESTAR CRIACAO DA SALA
@@ -55,20 +56,21 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, sala) 
   
-    def test_api_can_update_sala(self):
+    def test_api_can_update_sala(self):        
         """Test the api can update a given sala."""
-        sala = Sala.objects.get()                 
+        sala = Sala.objects.get()   
         change_sala = {'name': 'Radial Leste'}
         res = self.client.put(
-            reverse('details_sala', kwargs={'pk': sala.id}),
-            change_sala, format='json')               
+                reverse('details_sala', kwargs={'pk': sala.id}),
+                change_sala, 
+                headers=({'Content-Type':'application/json'}))        
         self.assertEqual(res.status_code, status.HTTP_200_OK)
     
-    def test_api_can_delete_sala(self):
-        """Test the api can delete a sala."""
-        sala = Sala.objects.get()
-        res = self.client.delete(
-            reverse('details_sala', kwargs={'pk': sala.id}),
-            format='json',
-            follow=True)        
-        self.assertEquals(res.status_code, status.HTTP_204_NO_CONTENT)
+    # def test_api_can_delete_sala(self):
+    #     """Test the api can delete a sala."""
+    #     sala = Sala.objects.get()
+    #     res = self.client.delete(
+    #         reverse('details_sala', kwargs={'pk': sala.id}),
+    #         format='json',
+    #         follow=True)        
+    #     self.assertEquals(res.status_code, status.HTTP_204_NO_CONTENT)
