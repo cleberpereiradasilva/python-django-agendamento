@@ -16,5 +16,8 @@ class DetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Agenda.objects.all()
     serializer_class = AgendaSerializer
 
+    def put(self, request, *args, **kwargs):                
+        return self.update(request, *args, **kwargs)
+
 
 

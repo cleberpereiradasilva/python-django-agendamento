@@ -3,6 +3,8 @@ from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
 from .models import Agenda
+from salas.models import Sala
+import datetime
 
 # TESTAR CRIACAO DA AGENDA
 class ModelAgendaTestCase(TestCase):
@@ -11,14 +13,27 @@ class ModelAgendaTestCase(TestCase):
     def setUp(self):
         """Variaveis iniciais para o teste."""        
         self.titulo = "Reunião ABC"
-        self.agenda = Agenda(titulo=self.titulo)
+        self.date_init = '2019-01-05 14:00'
+        self.date_end = '2019-01-05 16:00'
+        self.agenda = Agenda(
+                titulo=self.titulo,
+                date_init=self.date_init, 
+                date_end=self.date_end
+                )
+
+        self.name = "Rua Augusta"
+        self.sala = Sala(name=self.name)
+        self.sala.save()
+        self.agenda.sala = self.sala
 
     def test_model_can_create_a_agenda(self):
         """Testando se foi inserido no banco"""
         count_anterior = Agenda.objects.count()
-        self.agenda.save()
+        self.agenda.save()       
         count_atual = Agenda.objects.count()
+
         self.assertNotEqual(count_anterior, count_atual)
+        self.assertEqual(self.agenda.sala, self.sala)
 
     def test_model_agenda_to_str(self):
         """Testando se o metodo __str__"""
@@ -32,16 +47,34 @@ class ViewTestCase(TestCase):
     
     def setUp(self):
         """Variaveis iniciais para o teste."""
+        self.sala = Sala(name="Av Paulista")
+        self.sala.save()     
+
+        self.date_init = '2019-01-05 14:00'
+        self.date_end = '2019-01-05 16:00'          
+
         self.client = APIClient()
-        self.agenda_data = {'titulo': 'Reuniao ABC'}
+        self.agenda_data = {
+            'titulo': 
+            'Reuniao ABC', 
+            'sala' : self.sala.id,
+            'date_init' : self.date_init,
+            'date_end' : self.date_end 
+        }
+
         self.response = self.client.post(
             reverse('create_agenda'),
             self.agenda_data,
             format="json")
+       
+        
 
     def test_api_can_create_a_agenda(self):
         """Testando a criacao da agenda via post"""
+        
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+        agenda = Agenda.objects.get()           
+        self.assertEqual(agenda.sala, self.sala)
 
 
     def test_api_can_get_a_genda(self):
