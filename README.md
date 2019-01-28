@@ -137,7 +137,7 @@ deve apenas reservar a sala, se a sala requisitada estiver disponível. Caso con
 	- [GET] http://localhost:8000/agenda/?data_inicial=2019-01-01&data_final=2019-12-12&sala=1
 ---
   
-## Rodas os Testes
+## Rodar os Testes
 
 ```bash
   python -W ignore manage.py test 
