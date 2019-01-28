@@ -7,5 +7,4 @@ urlpatterns = {
     url(r'^(?P<pk>[0-9]+)$',
         DetailsView.as_view(), name="details_genda"),    
 }
-
 urlpatterns = format_suffix_patterns(urlpatterns)

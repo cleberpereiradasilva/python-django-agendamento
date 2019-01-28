@@ -31,9 +31,28 @@ class ModelAgendaTestCase(TestCase):
         count_anterior = Agenda.objects.count()
         self.agenda.save()       
         count_atual = Agenda.objects.count()
-
         self.assertNotEqual(count_anterior, count_atual)
         self.assertEqual(self.agenda.sala, self.sala)
+
+    def test_model_can_create_duplicate_agenda(self):
+        """Testando se foi duplicado no banco"""
+        agenda_duplicada_a = Agenda(
+                titulo=self.titulo,
+                date_init=self.date_init, 
+                date_end=self.date_end
+                )
+        agenda_duplicada_b = Agenda(
+                titulo=self.titulo,
+                date_init=self.date_init, 
+                date_end=self.date_end
+                )
+        agenda_duplicada_a.sala = self.sala
+        agenda_duplicada_a.save()
+
+        agenda_duplicada_b.sala = self.sala
+        with self.assertRaises(ValueError):
+            agenda_duplicada_b.save()        
+         
 
     def test_model_agenda_to_str(self):
         """Testando se o metodo __str__"""
@@ -66,12 +85,9 @@ class ViewTestCase(TestCase):
             reverse('create_agenda'),
             self.agenda_data,
             format="json")
-       
-        
 
     def test_api_can_create_a_agenda(self):
-        """Testando a criacao da agenda via post"""
-        
+        """Testando a criacao da agenda via post"""        
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
         agenda = Agenda.objects.get()           
         self.assertEqual(agenda.sala, self.sala)
@@ -92,8 +108,7 @@ class ViewTestCase(TestCase):
         change_genda = {'titulo': 'Radial Leste'}
         res = self.client.put(
             reverse('details_genda', kwargs={'pk': agenda.id}),
-            change_genda, format='json')                       
-        #print(res.content)
+            change_genda, format='json')                               
         self.assertEqual(res.status_code, status.HTTP_200_OK)
     
     def test_api_can_delete_genda(self):
