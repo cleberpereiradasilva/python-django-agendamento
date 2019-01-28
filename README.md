@@ -26,30 +26,40 @@ deve apenas reservar a sala, se a sala requisitada estiver disponível. Caso con
 - [x] Impedir agendamentos simultâneos(Model)
 - [x] Impedir agendamentos simultâneos(URL)
 - [x] Uma API para listar e filtrar agendamentos por data e sala
+- [x] Rodando em Docker com Postgres e gunicorn
   
 
-## Como rodar  
+## Como rodar (docker-compose) 
+- Usar como path a pasta onde encontra-se o arquivo `Dockerfile`
+    ```bash
+        docker-compose up --build
+    ``` 
+- Pode haver algum problema de permissão no diretório do postgre então usar o seguinte comando:
+    ```sudo chown $USER:$USER postgres_data/ -R```
 
-```bash
 
-pip install -r requirements.txt
-python manage.py runserver
+## Como rodar (sem docker-compose) 
+- Usar como path a pasta onde encontra-se o arquivo `manage.py`
+- Configurar o banco de dados de sua preferência em ```agenda_me/agenda_me/settings.py```
 
-``` 
-  
+    ```bash    
+        pip install -r requirements.txt
+        python manage.py runserver
+
+    ``` 
 
 ## Urls
 
 ### Salas
-
+---
 - Listar todas as salas:
 
 	- [GET] http://localhost:8000/sala/
-
+---
 - Obter dados de uma sala:
 
 	- [GET] http://localhost:8000/sala/1
-
+---
 - Criar uma sala:
 
 	- Campos: 
@@ -59,7 +69,7 @@ python manage.py runserver
 		}
 	```
 	- [POST] http://localhost:8000/sala/
-
+---
 - Editar uma sala:	
 	- Campos: 
 	```
@@ -68,7 +78,7 @@ python manage.py runserver
 		}
 	```
 	- [PUT] http://localhost:8000/sala/1
-
+---
 - Remover uma sala:
 	- [DELETE] http://localhost:8000/sala/1
 
@@ -128,6 +138,7 @@ python manage.py runserver
 ---
   
 ## Rodas os Testes
+
 ```bash
   python -W ignore manage.py test 
 ```
