@@ -37,12 +37,14 @@ class DetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Agenda.objects.all()
     serializer_class = AgendaSerializer
     
-    def perform_update(self, serializer):        
-        try: 
-            serializer.save()             
-        except Exception as e:            
-            error = {'message': ",".join(e.args) if len(e.args) > 0 else 'Unknown Error'}            
-            return Response(error,status=status.HTTP_400_BAD_REQUEST)
+    # def partial_update(self, serializer):     
+    #     print('Atualizando..')   
+    #     try: 
+    #         serializer.save()             
+    #     except Exception as e: 
+    #         print('Erro?')           
+    #         error = {'message': ",".join(e.args) if len(e.args) > 0 else 'Unknown Error'}            
+    #         return Response(error,status=status.HTTP_400_BAD_REQUEST)
             
 
        

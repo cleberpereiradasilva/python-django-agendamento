@@ -147,38 +147,40 @@ class ViewTestCase(TestCase):
         """Test the api can update a given agenda."""
         agenda = Agenda.objects.get()                      
         change_genda = {'titulo': 'Radial Leste'}
+        
+        
         res = self.client.put(
             reverse('details_genda', kwargs={'pk': agenda.id}),
-            change_genda, format='json')                               
+            change_genda, format='json')                                           
+        
+        self.assertTrue(change_genda.get('titulo') in str(res.content))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
 
-    # def test_api_can_update_duplicate_agenda(self):
-    #     """Test the api can update duplicate given agenda."""
-    #     agenda = Agenda.objects.get()   
+    def test_api_can_update_duplicate_agenda(self):
+        """Test the api can update duplicate given agenda."""
+        agenda = Agenda.objects.get()   
         
-    #     date_init = '2019-02-05 11:00'
-    #     date_end = '2019-02-05 12:00'   
-    #     agenda_data = {
-    #         'titulo': 
-    #         'Reuniao ABC', 
-    #         'sala' : self.sala.id,
-    #         'date_init' : date_init,
-    #         'date_end' : date_end 
-    #     }
+        date_init = '2019-02-05 11:00'
+        date_end = '2019-02-05 12:00'   
+        agenda_data = {
+            'titulo': 
+            'Reuniao ABC', 
+            'sala' : self.sala.id,
+            'date_init' : date_init,
+            'date_end' : date_end 
+        }
 
-    #     res = self.client.post(
-    #         reverse('agenda'),
-    #         agenda_data,
-    #         format="json")
-    #     self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-
-    #     agenda_data['date_end'] = '2019-02-05 15:00'
-    #     res_put = self.client.put(
-    #         reverse('details_genda', kwargs={'pk': 2}),
-    #         agenda_data, format='json')        
-    #     #print(res_put.content)                               
-    #     self.assertEqual(res_put.status_code, status.HTTP_400_BAD_REQUEST)
+        res = self.client.post(
+            reverse('agenda'),
+            agenda_data,
+            format="json")
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)        
+        agenda_data['date_end'] = '2019-02-05 15:20'        
+        res_put = self.client.put(
+            reverse('details_genda', kwargs={'pk': 2}),
+            agenda_data, format='json')              
+        self.assertEqual(res_put.status_code, status.HTTP_400_BAD_REQUEST)
 
 
     

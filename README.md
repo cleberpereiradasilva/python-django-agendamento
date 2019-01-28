@@ -23,7 +23,7 @@ erro.
  - [x] Uma API para criar, editar e remover salas de reuniões
  - [x] Uma API para criar, editar e remover agendamentos
  - [x] Impedir agendamentos simultâneos(Model)
- - [ ] Impedir agendamentos simultâneos(URL)
+ - [x] Impedir agendamentos simultâneos(URL)
  - [x] Uma API para listar e filtrar agendamentos por data e sala
 
  ## Como rodar
@@ -43,13 +43,15 @@ coverage erase; coverage run --source=salas,agenda manage.py test; coverage repo
 ```
 |Name                    | Stmts |Miss| Cover|
 |-|-|-|-|
-|agenda/models.py           |11      |0   |100%
-|agenda/serializers.py       |7      |0   |100%
-|agenda/views.py            |13      |0   |100%
+|agenda/models.py           |24      |0   |100%
+|agenda/serializers.py      |19      |0   |100%
+|agenda/views.py            |25      |0   |100%
 |salas/models.py             |8      |0   |100%
 |salas/serializers.py        |8      |0   |100%
 |salas/views.py             |11      |0   |100%
-|Total                      |58      |0   |100%
+|Total                      |95      |0   |100%
+
+
  
 
 ## License - MIT

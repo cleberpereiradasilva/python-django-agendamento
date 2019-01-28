@@ -17,7 +17,16 @@ class AgendaSerializer(serializers.ModelSerializer):
             error = {'message': ",".join(e.args) if len(e.args) > 0 else 'Unknown Error'}
             raise serializers.ValidationError(error, code=400)
 
-    
+    def update(self, instance, validated_data):  
+       
+        try:
+            return super(AgendaSerializer, self).update(instance, validated_data)
+        except Exception as e:
+            error = {'message': ",".join(e.args) if len(e.args) > 0 else 'Unknown Error'}
+            raise serializers.ValidationError(error, code=400)
+
+
+   
         
 
            
