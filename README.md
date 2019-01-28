@@ -159,6 +159,17 @@ coverage erase; coverage run --source=salas,agenda manage.py test; coverage repo
 |salas/views.py |11 |0 |100%
 |Total |95 |0 |100%   
 
+
+## Outros testes
+
+- Deixei também o arquivo do `postman` para testar se quiser: 
+
+`Maga.postman_collection.json`
+
+## Login
+- Não fiz o login porque não pedia na documentação.
+
+
 ## License - MIT
   
 [MIT](https://choosealicense.com/licenses/mit/)

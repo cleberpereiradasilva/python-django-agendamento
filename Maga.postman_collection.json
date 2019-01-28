@@ -1,0 +1,304 @@
+{
+	"info": {
+		"_postman_id": "3f56a13d-bb45-4a40-b8bb-36f763ae1580",
+		"name": "Maga",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar Salas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/sala",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"sala"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar uma Sala",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Av Paulista 00\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8000/sala/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"sala",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar uma Sala",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Av Paulista 0002\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8000/sala/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"sala",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter os dados de uma Sala",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/sala/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"sala",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remover uma Sala",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/sala/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"sala",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Agendas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Reuniao ABC\", \n    \"sala\" : \"1\",\n    \"date_init\" : \"2019-01-01 14:30\",\n    \"date_end\" : \"2019-01-01 16:30\" \n}"
+				},
+				"url": {
+					"raw": "localhost:8000/agenda/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"agenda",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar uma Agenda",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Reuniao ABC\", \n    \"sala\" : \"1\",\n    \"date_init\" : \"2019-05-01 11:30\",\n    \"date_end\" : \"2019-05-01 12:30\" \n}"
+				},
+				"url": {
+					"raw": "localhost:8000/agenda/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"agenda",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar uma Agenda",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Reuniao ABC\", \n    \"sala\" : \"1\",\n    \"date_init\" : \"2019-01-01 11:30\",\n    \"date_end\" : \"2019-01-01 12:30\" \n}"
+				},
+				"url": {
+					"raw": "localhost:8000/agenda/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"agenda",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtrar Agendas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8000/agenda/?data_inicial=2019-01-01&data_final=2019-12-12&sala=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"agenda",
+						""
+					],
+					"query": [
+						{
+							"key": "data_inicial",
+							"value": "2019-01-01"
+						},
+						{
+							"key": "data_final",
+							"value": "2019-12-12"
+						},
+						{
+							"key": "sala",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter os dados de uma Agenda",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Reuniao ABC\", \n    \"sala\" : \"1\",\n    \"date_init\" : \"2019-01-01 14:30\",\n    \"date_end\" : \"2019-01-01 16:30\" \n}"
+				},
+				"url": {
+					"raw": "localhost:8000/agenda/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"agenda",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remover uma Agenda",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Reuniao ABC\", \n    \"sala\" : \"1\",\n    \"date_init\" : \"2019-01-01 14:30\",\n    \"date_end\" : \"2019-01-01 16:30\" \n}"
+				},
+				"url": {
+					"raw": "localhost:8000/agenda/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"agenda",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
