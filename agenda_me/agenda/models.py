@@ -12,10 +12,10 @@ class Agenda(models.Model):
     def __str__(self):        
         return "{0}".format(self.titulo)
 
-    def save(self, *args, **kwargs):                
+    def duplicado(self):
         date_init = self.date_init
         date_end = self.date_end
-        sala = self.sala
+        sala = self.sala        
 
         '''
             checa se existe algum agendamento entre o horario de inicio fim do agendamento
@@ -23,6 +23,7 @@ class Agenda(models.Model):
             e tem que ser para a mesma sala claro
 
         '''
+
         agendas = Agenda.objects.all()
         if(self.id != None):
             #NO CASO DE SE UPDATE EXCLUIR O PROPRIO ID
@@ -36,10 +37,12 @@ class Agenda(models.Model):
             .filter(date_init__lte=date_end)\
             .filter(date_end__gte=date_end)\
             .filter(sala_id=sala.id))           
-            )    
-        
-        if(agendamentos > 0):                        
-            raise ValueError('Sala já em uso nesse dia em horário.')
+            )
+        return agendamentos
+
+    def save(self, *args, **kwargs):                
+        if(self.duplicado() > 0):                 
+            raise ValueError('Sala já em uso nesse dia e horário.')
         else:
             super(Agenda, self).save(*args, **kwargs)
             
