@@ -44,12 +44,13 @@ class ModelAgendaTestCase(TestCase):
         agenda_duplicada_b = Agenda(
                 titulo=self.titulo,
                 date_init=self.date_init, 
-                date_end=self.date_end
+                date_end='2019-01-05 21:00'
                 )
         agenda_duplicada_a.sala = self.sala
         agenda_duplicada_a.save()
 
         agenda_duplicada_b.sala = self.sala
+        #espero que de erro
         with self.assertRaises(ValueError):
             agenda_duplicada_b.save()        
          
