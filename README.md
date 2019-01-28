@@ -22,7 +22,8 @@ erro.
 
  - [x] Uma API para criar, editar e remover salas de reuniões
  - [x] Uma API para criar, editar e remover agendamentos
- - [ ] Impedir agendamentos simultâneos
+ - [x] Impedir agendamentos simultâneos(Model)
+ - [ ] Impedir agendamentos simultâneos(URL)
  - [ ] Uma API para listar e filtrar agendamentos por data e sala
 
  ## Como rodar
