@@ -3,7 +3,7 @@ chardet==3.0.4
 coverage==4.5.2
 coveralls==1.5.1
 Django==2.1.5
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 docopt==0.6.2
 idna==2.8
 pytz==2018.9
