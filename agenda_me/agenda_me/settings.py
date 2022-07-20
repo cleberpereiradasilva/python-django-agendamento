@@ -173,8 +173,3 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # HEROKU
 django_heroku.settings(locals())
-
-# from agenda_me.utils import MailSender
-
-# mail = MailSender('tonyadryanogomes1@gmail.com', 'alzgqtxogcotobfp')
-# mail.send_via_gmail(to='tonyadryanogomes1@gmail.com', name='Tony Zika')
