@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'salas',
     'agenda',
+    'departamento',
 ]
 
 MIDDLEWARE = [
