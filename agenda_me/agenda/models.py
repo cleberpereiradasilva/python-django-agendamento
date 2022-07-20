@@ -1,5 +1,6 @@
 from django.db import models
 from salas.models import Sala
+from departamento.models import Department
 
 class Agenda(models.Model):    
     titulo = models.CharField(max_length=255, blank=False, unique=False, verbose_name="Título")
@@ -8,6 +9,7 @@ class Agenda(models.Model):
     date_end = models.DateTimeField(blank=True, null=True, verbose_name="Data/Hora de término")
     created_by = models.CharField(max_length=100, null=False, blank=False, verbose_name="Criado por")
     creator_email = models.EmailField(null=False, blank=False, verbose_name="Email de quem criou")
+    creator_department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, verbose_name="Departamento de quem criou")
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
