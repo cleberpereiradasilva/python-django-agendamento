@@ -1,5 +1,6 @@
 .env/
 .env
+.env.local
 agenda_me/db.sqlite3
 .vscode/
 .venv/
