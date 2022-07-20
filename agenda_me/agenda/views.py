@@ -5,15 +5,19 @@ from .models import Agenda
 from rest_framework.response import Response
 from rest_framework import status
 
+from agenda_me.utils import MailSender
 
+from dotenv import load_dotenv
+load_dotenv()
 
 class CreateView(generics.ListCreateAPIView):   
     queryset = Agenda.objects.all()
-    serializer_class = AgendaSerializer        
+    serializer_class = AgendaSerializer
+    
 
-    def perform_create(self, serializer):
-        """Salva os dados do post e cria uma nova Agenda."""                        
-        serializer.save()     
+    def perform_create(self, serializer: AgendaSerializer):
+        serializer.save()
+
 
     def get(self, request, format=None):
         agendas = Agenda.objects.all()
