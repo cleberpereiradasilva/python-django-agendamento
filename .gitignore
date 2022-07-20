@@ -1,3 +1,7 @@
 .env/
+.env
 agenda_me/db.sqlite3
 .vscode/
+.venv/
+venv/
+*.pyc
