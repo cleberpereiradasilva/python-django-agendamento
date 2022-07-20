@@ -2,10 +2,12 @@ from django.db import models
 from salas.models import Sala
 
 class Agenda(models.Model):    
-    titulo = models.CharField(max_length=255, blank=False, unique=False)
+    titulo = models.CharField(max_length=255, blank=False, unique=False, verbose_name="Título")
     sala = models.ForeignKey(Sala, on_delete=models.CASCADE, blank=True, null=True)    
-    date_init = models.DateTimeField(blank=False, null=True)
-    date_end = models.DateTimeField(blank=True, null=True)
+    date_init = models.DateTimeField(blank=False, null=True, verbose_name="Data/Hora de início")
+    date_end = models.DateTimeField(blank=True, null=True, verbose_name="Data/Hora de término")
+    created_by = models.CharField(max_length=100, null=False, blank=False, verbose_name="Criado por")
+    creator_email = models.EmailField(null=False, blank=False, verbose_name="Email de quem criou")
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
