@@ -1,3 +1,7 @@
 from django.contrib import admin
+from salas.models import Sala
 
-# Register your models here.
+@admin.register(Sala)
+class SalaAdmin(admin.ModelAdmin):
+    list_display = ("id", "name")
+    list_display_links =  ("id", "name")
