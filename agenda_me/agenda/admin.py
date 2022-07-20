@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from agenda.models import Agenda
+
+@admin.register(Agenda)
+class AgendaAdmin(admin.ModelAdmin):
+    list_display = ("titulo", "date_init", "date_end", "sala", "created_by")
