@@ -1,4 +1,3 @@
-import asyncio
 import os
 import time
 from unidecode import unidecode
@@ -52,13 +51,12 @@ class Agenda(models.Model):
             )
         return agendamentos
     
-    async def send_code_email(self, receiver_email, receiver_name, code):
+    def send_code_email(self, receiver_email, receiver_name, code):
         """Tenta enviar o email com o código de segurança para a pessoa que agendou"""
         mail = MailSender(os.getenv('EMAIL_SENDER_ADDRESS'), os.getenv('EMAIL_SENDER_PASSWORD'))
         try:
-            mail.send_via_gmail(to=receiver_email, name=receiver_name, code=code)
+            mail.send_via_outlook(to=receiver_email, name=receiver_name, code=code)
             print(f'[!] Code email sended to <{receiver_email}>, from <{mail.sender_email}> at {datetime.now()} [!]')
-
         except Exception as e:
             print('Error sending email:', e)
 
@@ -66,19 +64,20 @@ class Agenda(models.Model):
         if(self.duplicado() > 0):
             raise ValueError('Sala já em uso nesse dia e horário.')
         elif (not os.getenv('EMAIL_SENDER_ADDRESS')) or (not os.getenv('EMAIL_SENDER_PASSWORD')):
-            raise ValueError('Não é possível enviar um email de confirmação ao usuário.')
+            raise ValueError('Não foi possível enviar um email de confirmação ao usuário.')
         else:
             # Só executa quando o dado está sendo criado no banco
             if not self.id:
                 receiver_email: str = self.creator_email
                 receiver_name: str = self.created_by
 
-                # Código gerado automaticamente, deve ser enviado por email ao <receiver_email> e salvo no banco de dados.
+                # Código gerado automaticamente e salvo na instancia
                 code = unidecode(''.join(f'{receiver_name}{time.time()}'.split()).replace('.', '').upper())
                 self.code = code
 
-                # Envia o email de forma assíncrona
-                asyncio.run(self.send_code_email(receiver_email, receiver_name, code))
+                # Envia o email com o <code> ao <receiver_email> 
+                self.send_code_email(receiver_email, receiver_name, code)
 
+            # Salva a instancia no banco de dados
             super(Agenda, self).save(*args, **kwargs)
 
