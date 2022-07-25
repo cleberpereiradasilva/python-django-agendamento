@@ -53,12 +53,10 @@ class Agenda(models.Model):
     
     def send_code_email(self, receiver_email, receiver_name, code):
         """Tenta enviar o email com o código de segurança para a pessoa que agendou"""
-        mail = MailSender(os.getenv('EMAIL_SENDER_ADDRESS'), os.getenv('EMAIL_SENDER_PASSWORD'))
-        try:
-            mail.send_via_outlook(to=receiver_email, name=receiver_name, code=code)
-            print(f'[!] Code email sended to <{receiver_email}>, from <{mail.sender_email}> at {datetime.now()} [!]')
-        except Exception as e:
-            print('Error sending email:', e)
+
+        mail = MailSender(os.getenv('EMAIL_SENDER_ADDRESS'), os.getenv('EMAIL_SENDER_PASSWORD'), sender_email_alias='Reuniao GIMI <reuniao@gimi.com.br>')
+        mail.send_via_outlook(to=receiver_email, name=receiver_name, code=code)
+        print(f'[!] Code email sended to <{receiver_email}>, from <{mail.sender_email}> at {datetime.now()} [!]')
 
     def save(self, *args, **kwargs):
         if(self.duplicado() > 0):
@@ -76,8 +74,11 @@ class Agenda(models.Model):
                 self.code = code
 
                 # Envia o email com o <code> ao <receiver_email> 
-                self.send_code_email(receiver_email, receiver_name, code)
-
+                try:
+                    self.send_code_email(receiver_email, receiver_name, code)
+                except Exception as e:
+                    print('Error sending email:', e)
+                    raise ConnectionError('Erro de conexão ao enviar o email de confirmação. Tente novamente.')
             # Salva a instancia no banco de dados
             super(Agenda, self).save(*args, **kwargs)
 
