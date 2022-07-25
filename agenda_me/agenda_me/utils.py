@@ -6,15 +6,16 @@ from typing import Literal, Union
 
 
 class MailSender:
-    def __init__(self, sender_email: str, password: Union[str, int]) -> None:
+    def __init__(self, sender_email: str, password: Union[str, int], sender_email_alias: Union[str, None] = None) -> None:
         self.sender_email = sender_email or ""
         self.password = password
+        self.sender_email_alias = sender_email_alias
 
     def __get_default_message(self, receiver_email: str, receiver_name: str, code: str):
         """Retorna a mensagem padrão utilizada para o corpo do email."""
         message = MIMEMultipart("alternative")
         message["Subject"] = "GIMI - Seu código de agendamento de reunião."
-        message["From"] = self.sender_email
+        message["From"] = self.sender_email_alias or self.sender_email
         message["To"] = receiver_email
 
         html = f"""
@@ -25,12 +26,14 @@ class MailSender:
                 </style>
             </head>
             <body>
-                <p>
-                    Olá, {receiver_name}<br>
-                    Aqui está o número do seu agendamento na sala de reuniões.<br>
-                </p>
-                <h1>{code}</h1>
-                <p><strong>Somente você</strong> pode utilizá-lo para excluir/cancelar seu agendamento.</p>
+                <div id="container">
+                    <p>
+                        Olá, {receiver_name}<br>
+                        Aqui está o número do seu agendamento na sala de reuniões.<br>
+                    </p>
+                    <h1>{code}</h1>
+                    <p><strong>Somente você</strong> pode utilizá-lo para excluir/cancelar seu agendamento.</p>
+                </div>
             </body>
         </html>
         """
@@ -56,24 +59,18 @@ class MailSender:
         if has_ssl:
             smtp_kwargs['context'] = ssl_context
 
-        try:
-            with SMTP_HANDLER(**smtp_kwargs) as server:
-                if tls:
-                    server.starttls(context=ssl_context)
+        with SMTP_HANDLER(**smtp_kwargs) as server:
+            if tls:
+                server.starttls(context=ssl_context)
 
-                server.login(self.sender_email, self.password)
-                server.sendmail(
-                    from_addr=self.sender_email,
-                    to_addrs=receiver_email,
-                    msg=message
-                )
-            return 'success'
-        except smtplib.SMTPAuthenticationError as e:
-            print(f'Erro ao autenticar email <{self.sender_email}>: {e}')
-            return 'failure'
-        except smtplib.SMTPConnectError as e:
-            print(f'Erro durante a conexão SMTP <{self.sender_email}>: {e}')
-            return 'failure'
+            server.login(self.sender_email, self.password)
+            server.sendmail(
+                from_addr=self.sender_email_alias or self.sender_email,
+                to_addrs=receiver_email,
+                msg=message
+            )
+        return 'success'
+
 
     def send_via_gmail(self, to: str, name: str, code: str, **kwargs) -> None:
         '''
