@@ -41,12 +41,25 @@ deve apenas reservar a sala, se a sala requisitada estiver disponível. Caso con
 ## Como rodar (sem docker-compose) 
 - Usar como path a pasta onde encontra-se o arquivo `manage.py`
 - Configurar o banco de dados de sua preferência em ```agenda_me/agenda_me/settings.py```
+- Declarar as variáveis de ambiente, conforme o arquivo `.env.example`
 
-    ```bash    
-        pip install -r requirements.txt
-        python manage.py runserver
+	```bash
+		# Criar e ativar ambiente virtual
+		python -m venv .venv
+		.\.venv\Scripts\Activate.ps1
 
-    ``` 
+		# Instalar dependências
+		pip install -r requirements.txt
+
+		# Criar as tabelas necessárias para o banco de dados
+		python <caminho/para/manage.py> migrate
+		
+		# Rodar o servidor de desenvolvimento
+		python <caminho/para/manage.py> runserver
+
+		# Caso necessário, criar um superusuário
+		python <caminho/para/manage.py> createsuperuser
+	``` 
 
 ## Urls
 
@@ -80,6 +93,7 @@ deve apenas reservar a sala, se a sala requisitada estiver disponível. Caso con
 	- [PUT] http://localhost:8000/sala/1
 ---
 - Remover uma sala:
+
 	- [DELETE] http://localhost:8000/sala/1
 
   
@@ -99,9 +113,12 @@ deve apenas reservar a sala, se a sala requisitada estiver disponível. Caso con
 	```
 		{
 		  "titulo": "Reuniao ABC",
-		  "sala" : "1",
+		  "sala" : 1,
 		  "date_init" : "2019-01-01 14:30",
-		  "date_end" : "2019-01-01 16:30"
+		  "date_end" : "2019-01-01 16:30"	,
+			"created_by": "João",
+			"creator_email": "joaozinho@gmail.com",
+			"creator_department": 1
 		}
 	```
 	- [POST] http://localhost:8000/agenda/
@@ -114,13 +131,23 @@ deve apenas reservar a sala, se a sala requisitada estiver disponível. Caso con
 		  "titulo": "Reuniao ABCDeE",
 		  "sala" : "1",
 		  "date_init" : "2019-01-01 14:30",
-		  "date_end" : "2019-01-01 16:30"
+		  "date_end" : "2019-01-01 16:30",
+			"created_by": "João",
+			"creator_email": "joaozinho@gmail.com",
+			"creator_department": 1
 		}
 	```
 
 	- [PUT] http://localhost:8000/agenda/1
 ---
 - Remover uma agenda:
+
+	- Campos: 
+	```
+		{
+			"code" : "CODIGODOAGENDAMENTO123456"
+		}
+	```
 
 	- [DELETE] http://localhost:8000/agenda/1
 ---
@@ -136,6 +163,44 @@ deve apenas reservar a sala, se a sala requisitada estiver disponível. Caso con
 
 	- [GET] http://localhost:8000/agenda/?data_inicial=2019-01-01&data_final=2019-12-12&sala=1
 ---
+
+
+
+### Departamentos
+---
+- Listar todos os departamentos:
+
+	- [GET] http://localhost:8000/departamento/
+---
+- Obter dados de um departamento:
+
+	- [GET] http://localhost:8000/departamento/1
+---
+- Criar um departamento:
+
+	- Campos:
+	```
+		{
+		  "name": "Diretoria"
+		}
+	```
+
+	- [POST] http://localhost:8000/departamento/
+---
+- Editar um departamento:
+
+	- Campos:
+	```
+		{
+			"name": "Diretoria"	
+		}
+	```
+
+	- [PUT] http://localhost:8000/departamento/
+---
+- Remover um departamento:
+
+	- [DELETE] http://localhost:8000/departamento/1
   
 ## Rodar os Testes
 
