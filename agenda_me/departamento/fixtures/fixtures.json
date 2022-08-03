@@ -1,0 +1,23 @@
+[
+  {
+    "model": "departamento.Department",
+    "pk": "1",
+    "fields": {
+      "name": "TI"
+    }
+  },
+  {
+    "model": "departamento.Department",
+    "pk": "2",
+    "fields": {
+      "name": "Administrativo"
+    }
+  },
+  {
+    "model": "departamento.Department",
+    "pk": "3",
+    "fields": {
+      "name": "Diretoria"
+    }
+  }
+]
